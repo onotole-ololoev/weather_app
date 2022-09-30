@@ -36,13 +36,13 @@ const initialState = {
     },
     dt: 1664520883,
     sys: {
-        country: "TN",
+        country: "",
         sunrise: 1664514326,
         sunset: 1664557112
     },
     timezone: 7200,
     id: 2468925,
-    name: "City",
+    name: "",
     cod: 200
 }
 type ItialStateType = {
@@ -92,7 +92,24 @@ type ActionType = GetWeatherACType
 export const weatherReducer = (state: ItialStateType = initialState, action: ActionType) => {
     switch (action.type) {
         case "GET-WEATHER":
-            return {...action.data}
+            return {
+                ...state,
+                name: action.data.name,
+                main: {
+                    ...state.main,
+                    temp: action.data.main.temp,
+                    feels_like: action.data.main.feels_like,
+                    humidity: action.data.main.humidity
+                },
+                wind: {
+                    ...state.wind,
+                    speed: action.data.wind.speed
+                },
+                sys: {
+                    ...state.sys,
+                    country: action.data.sys.country
+                }
+            }
         default:
             return state
     }
@@ -105,13 +122,13 @@ export const getWeatherAC = (data: ItialStateType) => {
 type GetWeatherACType = ReturnType<typeof getWeatherAC>
 
 export const GetWeatherTC = (lat: string, lon: string): AppThunk => async dispatch => {
-            try {
-               let res = await weatherAPI.getWeather(lat, lon)
-                console.log(res.data)
-                getWeatherAC(res.data)
-            } catch (e) {
-                alert(e)
-            } finally {
-                console.log('finally')
-            }
+    try {
+        let res = await weatherAPI.getWeather(lat, lon)
+        console.log(res.data.main.temp + 'из санки темп')
+        dispatch(getWeatherAC(res.data))
+    } catch (e) {
+        alert(e)
+    } finally {
+        console.log('finally')
+    }
 }

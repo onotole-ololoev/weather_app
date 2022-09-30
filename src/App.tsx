@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import {InputCustom} from "./components/inputCustom/inputCustom";
 import {useAppDispatch, useAppSelector} from "./store/store";
@@ -7,8 +7,10 @@ import {GetWeatherTC} from "./store/weather-reducer";
 function App() {
     const location = useAppSelector(state => state.weather.name)
     const {temp, humidity, feels_like} = useAppSelector(state => state.weather.main)
-    const description = useAppSelector(state => state.weather.weather[0].description)
+    const country = useAppSelector(state => state.weather.sys.country)
     const windSpeed = useAppSelector(state => state.weather.wind.speed)
+
+    console.log(temp)
 
     const dispatch = useAppDispatch()
 
@@ -18,24 +20,18 @@ function App() {
     // const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=4309eddb919cb13ebb06fb1ce8de819e`
 
     const searchLocation = () => {
-        // axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=4309eddb919cb13ebb06fb1ce8de819e`)
-        //     .then(res => {
-        //     console.log(res.data)
-        // })
         dispatch(GetWeatherTC(lat, lon))
+        console.log(temp + 'из редакса темп')
         setLat('')
         setLon('')
     }
+
     const onLatChange = (valueLat: string) => {
         setLat(valueLat)
     }
     const onLonChange = (valueLon: string) => {
         setLon(valueLon)
     }
-
-    // useEffect(() => {
-    //     dispatch(GetWeatherTC(lat, lon))
-    // }, [location, temp, humidity, feels_like, description, windSpeed])
 
     return (
         <div className="app">
@@ -47,18 +43,18 @@ function App() {
             <div className='container'>
                 <div className='top'>
                     <div className='location'>
-                        <h3>{location}</h3>
+                        <h3>Location: {location}</h3>
                     </div>
                     <div className='temp'>
-                        <h1>{temp} C</h1>
+                        <h1>{Math.round(temp)} ℉</h1>
                     </div>
                     <div className="description">
-                        <p>{description}</p>
+                        <p>Country: {country}</p>
                     </div>
                 </div>
                 <div className="bottom">
                     <div className='bottom_item'>
-                        <p className='bold'>{feels_like}C</p>
+                        <p className='bold'>{Math.round(feels_like)} ℉</p>
                         <p className='bottom_item__text'>Feels like</p>
                     </div>
                     <div className="bottom_item">
@@ -66,7 +62,7 @@ function App() {
                         <p className='bottom_item__text'>Humidity</p>
                     </div>
                     <div className="bottom_item">
-                        <p className='bold'>{windSpeed} MPH</p>
+                        <p className='bold'>{Math.round(windSpeed)} MPH</p>
                         <p className='bottom_item__text'>Wind Speed</p>
                     </div>
                 </div>
