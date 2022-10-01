@@ -3,7 +3,7 @@ import {WeatherType} from "../store/weather-reducer";
 
 export const weatherAPI = {
     getWeather(lat: string, lon: string) {
-        return instance.get<ResponseWeatherType>(`weather?lat=${lat}&lon=${lon}&appid=4309eddb919cb13ebb06fb1ce8de819e`)
+        return instance.get<ResponseWeatherType>(`weather?lat=${lat}&lon=${lon}&units=imperial&appid=4309eddb919cb13ebb06fb1ce8de819e`)
     }
 }
 type ResponseWeatherType = {

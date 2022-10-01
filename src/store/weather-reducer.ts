@@ -94,6 +94,7 @@ export const weatherReducer = (state: ItialStateType = initialState, action: Act
         case "GET-WEATHER":
             return {
                 ...state,
+                weather: [...action.data.weather],
                 name: action.data.name,
                 main: {
                     ...state.main,

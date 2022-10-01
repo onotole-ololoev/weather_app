@@ -9,6 +9,8 @@ function App() {
     const {temp, humidity, feels_like} = useAppSelector(state => state.weather.main)
     const country = useAppSelector(state => state.weather.sys.country)
     const windSpeed = useAppSelector(state => state.weather.wind.speed)
+    const weather = useAppSelector(state => state.weather.weather[0].main)
+    const description = useAppSelector(state => state.weather.weather[0].description)
 
     console.log(temp)
 
@@ -49,6 +51,8 @@ function App() {
                         <h1>{Math.round(temp)} ℉</h1>
                     </div>
                     <div className="description">
+                        <p>{weather}</p>
+                        <p>{description}</p>
                         <p>Country: {country}</p>
                     </div>
                 </div>
