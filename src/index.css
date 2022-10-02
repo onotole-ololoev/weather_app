@@ -87,6 +87,9 @@ h3 {
     background: rgba(255,255,255,0.1);
     color: white;
 }
+.error {
+    background: rgba(253, 0, 0, 0.51);
+}
 .button {
     margin-top: 20px;
     padding: 0.7rem 1.5rem;

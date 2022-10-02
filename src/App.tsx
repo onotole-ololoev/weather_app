@@ -5,8 +5,10 @@ import {useAppDispatch, useAppSelector} from "./store/store";
 import {GetWeatherTC} from "./store/weather-reducer";
 import {Button} from "./components/button/button";
 import {setTempValueAC} from "./store/app-reducer";
+import {BasicAlert} from "./components/basicAlert/basicAlert";
 
 function App() {
+    const error = useAppSelector(state => state.app.isError)
     const location = useAppSelector(state => state.weather.name)
     const {temp, humidity, feels_like} = useAppSelector(state => state.weather.main)
     const country = useAppSelector(state => state.weather.sys.country)
@@ -46,6 +48,7 @@ function App() {
 
     return (
         <div className="app">
+            {error ? <BasicAlert /> : null}
             <div className='example'>
                 <h4>Example:</h4>
                 <p>Minsk = lat: 53.9, lon: 27.5667</p>
@@ -53,8 +56,8 @@ function App() {
                 <p>New York = lat: 40.730610, lon: -73.935242</p>
             </div>
             <div className="search">
-                <InputCustom onCallback={(valueLat) => onLatChange(valueLat)} name={'Enter latitude'} value={lat}/>
-                <InputCustom onCallback={(valueLon) => onLonChange(valueLon)} name={'Enter  longitude'} value={lon}/>
+                <InputCustom onCallback={(valueLat) => onLatChange(valueLat)} name={'Enter latitude'} value={lat} />
+                <InputCustom onCallback={(valueLon) => onLonChange(valueLon)} name={'Enter  longitude'} value={lon} />
                 <Button onCallback={searchLocation} name={'Show the weather'}/>
             </div>
             <div className='container'>
