@@ -11,8 +11,9 @@ function App() {
     const windSpeed = useAppSelector(state => state.weather.wind.speed)
     const weather = useAppSelector(state => state.weather.weather[0].main)
     const description = useAppSelector(state => state.weather.weather[0].description)
-
-    console.log(temp)
+    const tempValue = useAppSelector(state => state.app.tempValue)
+    const tempCelsius = (temp - 32) * 5 / 9
+    const feels_like_celsius = (feels_like - 32) * 5 / 9
 
     const dispatch = useAppDispatch()
 
@@ -23,7 +24,6 @@ function App() {
 
     const searchLocation = () => {
         dispatch(GetWeatherTC(lat, lon))
-        console.log(temp + 'из редакса темп')
         setLat('')
         setLon('')
     }
@@ -48,7 +48,8 @@ function App() {
                         <h3>Location: {location}</h3>
                     </div>
                     <div className='temp'>
-                        <h1>{Math.round(temp)} ℉</h1>
+                        {tempValue === 'fahrenheit' ? <h1>{Math.round(temp)} ℉</h1> : <h1>{Math.round(tempCelsius)} ºC</h1>}
+                        {/*<h1>{Math.round(temp)} ℉</h1>*/}
                     </div>
                     <div className="description">
                         <p>{weather}</p>
@@ -58,7 +59,8 @@ function App() {
                 </div>
                 <div className="bottom">
                     <div className='bottom_item'>
-                        <p className='bold'>{Math.round(feels_like)} ℉</p>
+                        {tempValue === 'fahrenheit' ?  <p className='bold'>{Math.round(feels_like)} ℉</p> : <p>{Math.round(feels_like_celsius)} ºC</p>}
+                        {/*<p className='bold'>{Math.round(feels_like)} ℉</p>*/}
                         <p className='bottom_item__text'>Feels like</p>
                     </div>
                     <div className="bottom_item">

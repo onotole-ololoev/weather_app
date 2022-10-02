@@ -45,7 +45,7 @@ const initialState = {
     name: "",
     cod: 200
 }
-type ItialStateType = {
+type InitialStateType = {
     coord: {
         lon: number
         lat: number
@@ -89,7 +89,7 @@ export type WeatherType = {
     icon: string
 }
 type ActionType = GetWeatherACType
-export const weatherReducer = (state: ItialStateType = initialState, action: ActionType) => {
+export const weatherReducer = (state: InitialStateType = initialState, action: ActionType) => {
     switch (action.type) {
         case "GET-WEATHER":
             return {
@@ -116,7 +116,7 @@ export const weatherReducer = (state: ItialStateType = initialState, action: Act
     }
 }
 
-export const getWeatherAC = (data: ItialStateType) => {
+export const getWeatherAC = (data: InitialStateType) => {
     return {type: 'GET-WEATHER', data} as const
 }
 
@@ -125,7 +125,6 @@ type GetWeatherACType = ReturnType<typeof getWeatherAC>
 export const GetWeatherTC = (lat: string, lon: string): AppThunk => async dispatch => {
     try {
         let res = await weatherAPI.getWeather(lat, lon)
-        console.log(res.data.main.temp + 'из санки темп')
         dispatch(getWeatherAC(res.data))
     } catch (e) {
         alert(e)
