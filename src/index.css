@@ -28,6 +28,16 @@ h3 {
     justify-content: center;
     flex-direction: column;
 }
+.example {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+@media (max-width: 1220px) {
+    .example {
+        display: none;
+    }
+}
 .app:before {
     content: '';
     background: url("./assets/background.jpeg") no-repeat center center/cover;
@@ -40,7 +50,7 @@ h3 {
 }
 .container {
     max-width: 700px;
-    height: 600px;
+    /*height: 600px;*/
     margin: auto;
     padding: 0 1rem;
     position: relative;
@@ -54,6 +64,12 @@ h3 {
     align-items: center;
     display: flex;
     flex-direction: column;
+}
+.temp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
 }
 .search {
     display: flex;
@@ -88,7 +104,7 @@ h3 {
 .bottom {
     display: flex;
     justify-content: space-evenly;
-    min-width: 400px;
+    min-width: 300px;
     border-radius: 15px;
     padding: 25px 0;
     background-color: rgba(255,255,255,0.1);

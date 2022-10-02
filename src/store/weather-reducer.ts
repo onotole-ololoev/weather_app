@@ -9,8 +9,8 @@ const initialState = {
     weather: [
         {
             id: 0,
-            main: "The weather is good",
-            description: "The weather is good",
+            main: "The weather is good =)",
+            description: "The weather is good =)",
             icon: "04d"
         }
     ],

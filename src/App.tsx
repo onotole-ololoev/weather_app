@@ -3,6 +3,8 @@ import './App.css';
 import {InputCustom} from "./components/inputCustom/inputCustom";
 import {useAppDispatch, useAppSelector} from "./store/store";
 import {GetWeatherTC} from "./store/weather-reducer";
+import {Button} from "./components/button/button";
+import {setTempValueAC} from "./store/app-reducer";
 
 function App() {
     const location = useAppSelector(state => state.weather.name)
@@ -27,6 +29,13 @@ function App() {
         setLat('')
         setLon('')
     }
+    const convertTemp = () => {
+        if (tempValue === 'fahrenheit') {
+            dispatch(setTempValueAC('celsius'))
+        } else {
+            dispatch(setTempValueAC('fahrenheit'))
+        }
+    }
 
     const onLatChange = (valueLat: string) => {
         setLat(valueLat)
@@ -37,30 +46,44 @@ function App() {
 
     return (
         <div className="app">
+            <div className='example'>
+                <h4>Example:</h4>
+                <p>Minsk = lat: 53.9, lon: 27.5667</p>
+                <p>Mozyr = lat: 52.0495, lon: 29.2456</p>
+                <p>New York = lat: 40.730610, lon: -73.935242</p>
+            </div>
             <div className="search">
                 <InputCustom onCallback={(valueLat) => onLatChange(valueLat)} name={'Enter latitude'} value={lat}/>
                 <InputCustom onCallback={(valueLon) => onLonChange(valueLon)} name={'Enter  longitude'} value={lon}/>
-                <button className='button' onClick={searchLocation}>Show the weather</button>
+                <Button onCallback={searchLocation} name={'Show the weather'}/>
             </div>
             <div className='container'>
                 <div className='top'>
                     <div className='location'>
                         <h3>Location: {location}</h3>
+                        <p>Country: {country}</p>
                     </div>
                     <div className='temp'>
-                        {tempValue === 'fahrenheit' ? <h1>{Math.round(temp)} ℉</h1> : <h1>{Math.round(tempCelsius)} ºC</h1>}
-                        {/*<h1>{Math.round(temp)} ℉</h1>*/}
-                    </div>
-                    <div className="description">
-                        <p>{weather}</p>
+                        {
+                            tempValue === 'fahrenheit'
+                                ?
+                                <h1>{Math.round(temp)} ℉</h1>
+                                :
+                                <h1>{Math.round(tempCelsius)} ºC</h1>
+                        }
                         <p>{description}</p>
-                        <p>Country: {country}</p>
+                        <Button onCallback={convertTemp} name={'Convert temp'}/>
                     </div>
                 </div>
                 <div className="bottom">
                     <div className='bottom_item'>
-                        {tempValue === 'fahrenheit' ?  <p className='bold'>{Math.round(feels_like)} ℉</p> : <p>{Math.round(feels_like_celsius)} ºC</p>}
-                        {/*<p className='bold'>{Math.round(feels_like)} ℉</p>*/}
+                        {
+                            tempValue === 'fahrenheit'
+                                ?
+                                <p className='bold'>{Math.round(feels_like)} ℉</p>
+                                :
+                                <p>{Math.round(feels_like_celsius)} ºC</p>
+                        }
                         <p className='bottom_item__text'>Feels like</p>
                     </div>
                     <div className="bottom_item">
