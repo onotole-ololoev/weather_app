@@ -12,11 +12,6 @@ export function BasicAlert() {
     const onCloseError = () => {
         dispatch(setErrorValueAC(false))
     }
-    // const autoClose = () => {
-    //     setTimeout(() => {
-    //         dispatch(setErrorValueAC(false))
-    //     }, 3000)
-    // }
     useEffect(() => {
         setTimeout(() => { onCloseError()}, 2000)
     }, [])

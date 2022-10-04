@@ -6,6 +6,7 @@ export const weatherAPI = {
         return instance.get<ResponseWeatherType>(`weather?lat=${lat}&lon=${lon}&units=imperial&appid=4309eddb919cb13ebb06fb1ce8de819e`)
     }
 }
+
 type ResponseWeatherType = {
     coord: {
         lon: number

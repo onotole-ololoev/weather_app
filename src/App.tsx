@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import './App.css';
 import {InputCustom} from "./components/inputCustom/inputCustom";
 import {useAppDispatch, useAppSelector} from "./store/store";
@@ -6,14 +6,15 @@ import {GetWeatherTC} from "./store/weather-reducer";
 import {Button} from "./components/button/button";
 import {setTempValueAC} from "./store/app-reducer";
 import {BasicAlert} from "./components/basicAlert/basicAlert";
+import LinearIndeterminate from "./components/linearProgress/linearProgress";
 
 function App() {
     const error = useAppSelector(state => state.app.isError)
+    const isLoading = useAppSelector(state => state.app.isLoading)
     const location = useAppSelector(state => state.weather.name)
     const {temp, humidity, feels_like} = useAppSelector(state => state.weather.main)
     const country = useAppSelector(state => state.weather.sys.country)
     const windSpeed = useAppSelector(state => state.weather.wind.speed)
-    const weather = useAppSelector(state => state.weather.weather[0].main)
     const description = useAppSelector(state => state.weather.weather[0].description)
     const tempValue = useAppSelector(state => state.app.tempValue)
     const tempCelsius = (temp - 32) * 5 / 9
@@ -24,7 +25,6 @@ function App() {
     const [lat, setLat] = useState<string>('')
     const [lon, setLon] = useState<string>('')
 
-    // const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=4309eddb919cb13ebb06fb1ce8de819e`
 
     const searchLocation = () => {
         dispatch(GetWeatherTC(lat, lon))
@@ -48,7 +48,8 @@ function App() {
 
     return (
         <div className="app">
-            {error ? <BasicAlert /> : null}
+            {isLoading ? <LinearIndeterminate /> : null}
+            {error ? <BasicAlert/> : null}
             <div className='example'>
                 <h4>Example:</h4>
                 <p>Minsk = lat: 53.9, lon: 27.5667</p>
@@ -56,8 +57,8 @@ function App() {
                 <p>New York = lat: 40.730610, lon: -73.935242</p>
             </div>
             <div className="search">
-                <InputCustom onCallback={(valueLat) => onLatChange(valueLat)} name={'Enter latitude'} value={lat} />
-                <InputCustom onCallback={(valueLon) => onLonChange(valueLon)} name={'Enter  longitude'} value={lon} />
+                <InputCustom onCallback={(valueLat) => onLatChange(valueLat)} name={'Enter latitude'} value={lat}/>
+                <InputCustom onCallback={(valueLon) => onLonChange(valueLon)} name={'Enter  longitude'} value={lon}/>
                 <Button onCallback={searchLocation} name={'Show the weather'}/>
             </div>
             <div className='container'>

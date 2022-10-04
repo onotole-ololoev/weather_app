@@ -1,5 +1,6 @@
 import {AppThunk} from "./store";
 import {weatherAPI} from "../api/weather-api";
+import {setAppLoadingAC} from "./app-reducer";
 
 const initialState = {
     coord: {
@@ -123,12 +124,13 @@ export const getWeatherAC = (data: InitialStateType) => {
 type GetWeatherACType = ReturnType<typeof getWeatherAC>
 
 export const GetWeatherTC = (lat: string, lon: string): AppThunk => async dispatch => {
+    dispatch(setAppLoadingAC(true))
     try {
         let res = await weatherAPI.getWeather(lat, lon)
         dispatch(getWeatherAC(res.data))
     } catch (e) {
         alert(e)
     } finally {
-        console.log('finally')
+        dispatch(setAppLoadingAC(false))
     }
 }
