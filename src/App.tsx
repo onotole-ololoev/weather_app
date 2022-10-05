@@ -90,7 +90,7 @@ function App() {
                                 ?
                                 <p className='bold'>{Math.round(feels_like)} ℉</p>
                                 :
-                                <p>{Math.round(feels_like_celsius)} ºC</p>
+                                <p className='bold'>{Math.round(feels_like_celsius)} ºC</p>
                         }
                         <p className='bottom_item__text'>Feels like</p>
                     </div>
