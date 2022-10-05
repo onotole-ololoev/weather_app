@@ -4,7 +4,7 @@ import {InputCustom} from "./components/inputCustom/inputCustom";
 import {useAppDispatch, useAppSelector} from "./store/store";
 import {GetWeatherTC} from "./store/weather-reducer";
 import {Button} from "./components/button/button";
-import {setTempValueAC} from "./store/app-reducer";
+import {setErrorValueAC, setTempValueAC} from "./store/app-reducer";
 import {BasicAlert} from "./components/basicAlert/basicAlert";
 import LinearIndeterminate from "./components/linearProgress/linearProgress";
 
@@ -27,9 +27,13 @@ function App() {
 
 
     const searchLocation = () => {
-        dispatch(GetWeatherTC(lat, lon))
-        setLat('')
-        setLon('')
+        if (lat && lon) {
+            dispatch(GetWeatherTC(lat, lon))
+            setLat('')
+            setLon('')
+        } else {
+            dispatch(setErrorValueAC(true))
+        }
     }
     const convertTemp = () => {
         if (tempValue === 'fahrenheit') {
@@ -59,7 +63,7 @@ function App() {
             <div className="search">
                 <InputCustom onCallback={(valueLat) => onLatChange(valueLat)} name={'Enter latitude'} value={lat}/>
                 <InputCustom onCallback={(valueLon) => onLonChange(valueLon)} name={'Enter  longitude'} value={lon}/>
-                <Button onCallback={searchLocation} name={'Show the weather'}/>
+                <Button onCallback={searchLocation} name={'Show the weather'} />
             </div>
             <div className='container'>
                 <div className='top'>

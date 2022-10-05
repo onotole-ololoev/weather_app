@@ -17,7 +17,7 @@ export function BasicAlert() {
     }, [])
     return (
         <Stack sx={{width: '100%'}} spacing={2}>
-            <Alert severity="error" onClose={onCloseError} >please, type only numbers...</Alert>
+            <Alert severity="error" onClose={onCloseError} >please, enter valid coordinates...</Alert>
         </Stack>
     );
 }

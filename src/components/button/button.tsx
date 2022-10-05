@@ -3,6 +3,7 @@ import React from 'react';
 type ButtonPropsType = {
     onCallback: () => void
     name: string
+    isDisable?: boolean
 }
 
 export const Button = (props: ButtonPropsType) => {
@@ -11,8 +12,10 @@ export const Button = (props: ButtonPropsType) => {
         props.onCallback()
     }
 
+
+
     return (
-        <button onClick={onHandleClick} className='button'>
+        <button onClick={onHandleClick} className='button' >
             {props.name}
         </button>
     );
